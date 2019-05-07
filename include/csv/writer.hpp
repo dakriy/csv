@@ -199,24 +199,24 @@ public:
     done_promise.set_value(true);
   }
 
-private:
-
   void write_header() {
-    auto dialect = dialects_[current_dialect_name_];
-    auto column_names = dialect.column_names_;
-    if (column_names.size() == 0)
-      return;
-    auto delimiter = dialect.delimiter_;
-    auto line_terminator = dialect.line_terminator_;
-    std::string row;
-    for (size_t i = 0; i < column_names.size(); i++) {
-      row += column_names[i];
-      if (i + 1 < column_names.size())
-        row += delimiter;
-    }
-    row += line_terminator;
-    queue.enqueue(row);
+	auto dialect = dialects_[current_dialect_name_];
+	auto column_names = dialect.column_names_;
+	if (column_names.size() == 0)
+		return;
+	auto delimiter = dialect.delimiter_;
+	auto line_terminator = dialect.line_terminator_;
+	std::string row;
+	for (size_t i = 0; i < column_names.size(); i++) {
+		row += column_names[i];
+		if (i + 1 < column_names.size())
+			row += delimiter;
+	}
+	row += line_terminator;
+	queue.enqueue(row);
   }
+
+private:
 
   bool front(std::string& message) {
     return queue.try_dequeue(message);
